@@ -1,0 +1,5 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@eureka1.res.nuobei.cn:8761/eureka/,http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@eureka0.res.nuobei.cn:8761/eureka/
+    fetch-registry: true

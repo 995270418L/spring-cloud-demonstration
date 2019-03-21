@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybwx.multidata.mapper.UserRoleEntityMapper">
+    <cache eviction="LRU" type="com.ybwx.common.mysql.cache.MybatisRedisCache"/>
+    <resultMap id="BaseResultMap" type="com.ybwx.multidata.entity.UserRoleEntity">
+        <result column="role_id" property="roleId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into a_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+    <if test="roleId != null">
+            `role_id`,
+    </if>
+    <if test="userId != null">
+            `user_id`,
+    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="roleId != null">
+            #{roleId},
+    </if>
+    <if test="userId != null">
+            #{userId},
+    </if>
+        </trim>
+    </insert>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        <include refid="findList"/>
+    </select>
+    <sql id="findList">
+        select
+        *
+        from a_user_role
+        <where>
+            <if test="userId != null">
+                and `user_id`=#{userId}
+            </if>
+        </where>
+    </sql>
+
+
+</mapper>

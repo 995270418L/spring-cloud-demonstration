@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="$mapperClassName">
+##    <cache eviction="LRU" type="com.ybwx.common.mysql.cache.MybatisRedisCache"/>
+    <resultMap id="BaseResultMap" type="$entityClassName">
+#if($table.columnKey)
+        <id column="$table.columnKey.columnName" property="$table.columnKey.propertyName"/>
+#end
+#foreach($item in $table.columnList)
+        <result column="$item.columnName" property="$item.propertyName"#if($item.typeHandler) typeHandler="$item.typeHandler"#end/>
+#end
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into $tableName
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+#if($table.columnKey)
+    <if test="${table.columnKey.propertyName} != null">
+            `$table.columnKey.columnName`,
+    </if>
+#end
+#foreach($item in $table.columnList)
+    <if test="${item.propertyName} != null">
+            `$item.columnName`,
+    </if>
+#end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+#if($table.columnKey)
+    <if test="${table.columnKey.propertyName} != null">
+            #{$table.columnKey.propertyName},
+    </if>
+#end
+#foreach($item in $table.columnList)
+    <if test="${item.propertyName} != null">
+            #{$item.propertyName#if($item.typeHandler),typeHandler=$item.typeHandler#end},
+    </if>
+#end
+        </trim>
+    </insert>
+#if($table.columnKey)
+
+    <update id="update">
+        update $tableName
+        <set>
+#foreach($item in $table.columnList)
+            <if test="${item.propertyName} != null">
+                `$item.columnName`=#{${item.propertyName}#if($item.typeHandler),typeHandler=$item.typeHandler#end},
+            </if>
+#end
+        </set>
+        where `$table.columnKey.columnName`=#{${table.columnKey.propertyName}}
+    </update>
+#end
+
+    <select id="selectList" resultMap="BaseResultMap">
+        <include refid="findList"/>
+    </select>
+    <sql id="findList">
+        select
+        *
+        from $tableName
+#if($table.columnKey)
+        <where>
+            <if test="${table.columnKey.propertyName} != null">
+                and `$table.columnKey.columnName`=#{${table.columnKey.propertyName}}
+            </if>
+#if($table.columnKeyCollection)
+            <if test="${table.columnKeyCollection.propertyNameCollection}  != null">
+                and `$table.columnKeyCollection.columnName` in
+                <foreach collection="${table.columnKeyCollection.propertyNameCollection}" open="(" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+            </if>
+#end
+        </where>
+        ORDER by $table.columnKey.columnName desc
+#end
+    </sql>
+
+#if($table.columnKey)
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM $tableName
+        where `$table.columnKey.columnName`=#{${table.columnKey.propertyName}}
+    </select>
+#end
+
+</mapper>

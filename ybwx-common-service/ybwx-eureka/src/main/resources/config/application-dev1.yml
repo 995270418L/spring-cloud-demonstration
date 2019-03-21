@@ -1,0 +1,14 @@
+server:
+  port: 8761
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15  # 服务过期时间
+    lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
+    hostname: peer1
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000  #启用主动失效，并且每次主动失效检测间隔为3s
+    response-cache-update-interval-ms: 3000
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@peer2:8762/eureka/,http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@peer3:8763/eureka/

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybwx.stock.mapper.StockEntityMapper">
+    <resultMap id="BaseResultMap" type="com.ybwx.stock.entity.StockEntity">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="total_num" property="totalNum"/>
+        <result column="left_num" property="leftNum"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into demo_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+    <if test="id != null">
+            `id`,
+    </if>
+    <if test="productId != null">
+            `product_id`,
+    </if>
+    <if test="totalNum != null">
+            `total_num`,
+    </if>
+    <if test="leftNum != null">
+            `left_num`,
+    </if>
+    <if test="createTime != null">
+            `create_time`,
+    </if>
+    <if test="updateTime != null">
+            `update_time`,
+    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="id != null">
+            #{id},
+    </if>
+    <if test="productId != null">
+            #{productId},
+    </if>
+    <if test="totalNum != null">
+            #{totalNum},
+    </if>
+    <if test="leftNum != null">
+            #{leftNum},
+    </if>
+    <if test="createTime != null">
+            #{createTime},
+    </if>
+    <if test="updateTime != null">
+            #{updateTime},
+    </if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update demo_stock
+        <set>
+            <if test="productId != null">
+                `product_id`=#{productId},
+            </if>
+            <if test="totalNum != null">
+                `total_num`=#{totalNum},
+            </if>
+            <if test="leftNum != null">
+                `left_num`=#{leftNum},
+            </if>
+            <if test="createTime != null">
+                `create_time`=#{createTime},
+            </if>
+            <if test="updateTime != null">
+                `update_time`=#{updateTime},
+            </if>
+        </set>
+        where `id`=#{id}
+    </update>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        <include refid="findList"/>
+    </select>
+    <sql id="findList">
+        select
+        *
+        from demo_stock
+        <where>
+            <if test="id != null">
+                and `id`=#{id}
+            </if>
+            <if test="idCollection  != null">
+                and `id` in
+                <foreach collection="idCollection" open="(" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="id != null">
+                and `product_id`=#{productId}
+            </if>
+        </where>
+        ORDER by id desc
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM demo_stock
+        where `id`=#{id}
+    </select>
+
+</mapper>

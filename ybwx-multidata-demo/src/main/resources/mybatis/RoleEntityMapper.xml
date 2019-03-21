@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybwx.multidata.mapper.RoleEntityMapper">
+    <cache eviction="LRU" type="com.ybwx.common.mysql.cache.MybatisRedisCache"/>
+    <resultMap id="BaseResultMap" type="com.ybwx.multidata.entity.RoleEntity">
+        <id column="id" property="id"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="description" property="description"/>
+        <result column="identifier" property="identifier"/>
+        <result column="is_default" property="isDefault" typeHandler="com.ybwx.common.mysql.type.YesNoStatusHandler"/>
+        <result column="name" property="name"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="valid" property="valid" typeHandler="com.ybwx.common.mysql.type.EnableDisableStatusHandler"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into a_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+    <if test="id != null">
+            `id`,
+    </if>
+    <if test="createdTime != null">
+            `created_time`,
+    </if>
+    <if test="description != null">
+            `description`,
+    </if>
+    <if test="identifier != null">
+            `identifier`,
+    </if>
+    <if test="isDefault != null">
+            `is_default`,
+    </if>
+    <if test="name != null">
+            `name`,
+    </if>
+    <if test="updatedTime != null">
+            `updated_time`,
+    </if>
+    <if test="valid != null">
+            `valid`,
+    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="id != null">
+            #{id},
+    </if>
+    <if test="createdTime != null">
+            #{createdTime},
+    </if>
+    <if test="description != null">
+            #{description},
+    </if>
+    <if test="identifier != null">
+            #{identifier},
+    </if>
+    <if test="isDefault != null">
+            #{isDefault,typeHandler=com.ybwx.common.mysql.type.YesNoStatusHandler},
+    </if>
+    <if test="name != null">
+            #{name},
+    </if>
+    <if test="updatedTime != null">
+            #{updatedTime},
+    </if>
+    <if test="valid != null">
+            #{valid,typeHandler=com.ybwx.common.mysql.type.EnableDisableStatusHandler},
+    </if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update a_role
+        <set>
+            <if test="createdTime != null">
+                `created_time`=#{createdTime},
+            </if>
+            <if test="description != null">
+                `description`=#{description},
+            </if>
+            <if test="identifier != null">
+                `identifier`=#{identifier},
+            </if>
+            <if test="isDefault != null">
+                `is_default`=#{isDefault,typeHandler=com.ybwx.common.mysql.type.YesNoStatusHandler},
+            </if>
+            <if test="name != null">
+                `name`=#{name},
+            </if>
+            <if test="updatedTime != null">
+                `updated_time`=#{updatedTime},
+            </if>
+            <if test="valid != null">
+                `valid`=#{valid,typeHandler=com.ybwx.common.mysql.type.EnableDisableStatusHandler},
+            </if>
+        </set>
+        where `id`=#{id}
+    </update>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        <include refid="findList"/>
+    </select>
+    <sql id="findList">
+        select
+        *
+        from a_role
+        <where>
+            <if test="id != null">
+                and `id`=#{id}
+            </if>
+                        <if test="idCollection  != null">
+                and `id` in
+                <foreach collection="idCollection" open="(" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+            </if>
+                    </where>
+        ORDER by id desc
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM a_role
+        where `id`=#{id}
+    </select>
+
+</mapper>

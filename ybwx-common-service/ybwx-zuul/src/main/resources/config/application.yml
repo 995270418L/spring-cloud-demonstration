@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: ybwx-zuul
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8000
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15  # 服务过期时间
+    lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+  server:
+    eviction-interval-timer-in-ms: 15000       # 剔除服务时间
+  client:
+    register-with-eureka: true
+
+zuul:
+  routes:
+    web:
+      path: /order/**
+      serviceId: ybwx-order
+    spark:
+      path: /stock/**
+      serviceId: ybwx-stock
+    manager-admin:
+      path: /admin/**
+      serviceId: ybwx-manager-admin

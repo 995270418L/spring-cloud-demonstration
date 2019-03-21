@@ -1,0 +1,10 @@
+logs/*
+!.gitkeep
+node_modules/
+tmp
+.idea
+*.iml
+.DS_Store
+target/
+catalina.home_IS_UNDEFINED/
+*.log

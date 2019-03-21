@@ -1,0 +1,8 @@
+package $servicePackage;
+
+import com.ybwx.common.mysql.common.BaseService;
+import $entityClassName;
+
+public interface $serviceName extends BaseService<$entityName> {
+
+}

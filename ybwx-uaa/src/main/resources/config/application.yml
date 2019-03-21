@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: ybwx-uaa
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  profiles:
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+server:
+  port: 8080
+  servlet:
+    context-path: /uaa
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15  # 服务过期时间
+    lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    register-with-eureka: true

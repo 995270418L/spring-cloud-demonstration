@@ -1,0 +1,10 @@
+package $mapperPackage;
+
+import org.apache.ibatis.annotations.Mapper;
+import com.ybwx.common.mysql.common.BaseMapper;
+import $entityClassName;
+
+@Mapper
+public interface $mapperName extends BaseMapper<$entityName> {
+
+}

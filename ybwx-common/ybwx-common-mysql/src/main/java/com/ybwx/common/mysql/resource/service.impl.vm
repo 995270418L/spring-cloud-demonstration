@@ -1,0 +1,14 @@
+package $serviceImplPackage;
+
+import com.ybwx.common.mysql.common.impl.BaseServiceImpl;
+import $entityClassName;
+import $mapperClassName;
+import $serviceClassName;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+public class $serviceImplName extends BaseServiceImpl<$entityName, $mapperName> implements $serviceName {
+
+}

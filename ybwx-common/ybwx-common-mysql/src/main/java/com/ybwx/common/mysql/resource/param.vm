@@ -1,0 +1,28 @@
+package $paramPackage;
+
+import com.ybwx.common.mysql.common.QueryParam;
+import java.util.Collection;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class $paramName implements QueryParam {
+
+#if($table.columnKey)
+    private $table.columnKey.propertyDataType $table.columnKey.propertyName;
+#end
+#if($table.columnKeyCollection)
+    private Collection<$table.columnKeyCollection.propertyDataType> $table.columnKeyCollection.propertyNameCollection;
+#end
+    @Override
+    public boolean hasData() {
+        return false;
+    }
+
+}

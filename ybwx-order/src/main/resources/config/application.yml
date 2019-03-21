@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: ybwx-order
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://demo.mysql.cn:3306/demo?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    hikari:
+      connectionTimeout: 30000
+      maxLifetime: 1800000
+      maximumPoolSize: 5
+    username: root
+    password: root
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:/mybatis/*.xml
+
+server:
+  port: 8090
+  servlet:
+    context-path: /order
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15  # 服务过期时间
+    lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
+    status-page-url-path: ${server.servlet.context-path:/order}/actuator/info
+    health-check-url-path: ${server.servlet.context-path:/order}/actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    register-with-eureka: true
+
+feign:
+  okhttp:
+    enabled: true

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: ybwx-product-trial
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql0.res.nuobei.cn:3306/ybwx_admin?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    hikari:
+      connectionTimeout: 30000
+      maxLifetime: 1800000
+      maximumPoolSize: 5
+    username: ybwxdev
+    password: ybwx@dev
+
+mybatis:
+  mapper-locations: classpath:/mybatis/*.xml
+
+server:
+  port: 9000
+  servlet:
+    context-path: /trial
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 1  # 服务过期时间
+    lease-renewal-interval-in-seconds: 1      # 服务实例刷新时间
+    status-page-url-path: ${server.servlet.context-path:/order}/actuator/info
+    health-check-url-path: ${server.servlet.context-path:/order}/actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  server:
+    eviction-interval-timer-in-ms: 15000       # 剔除服务时间
+  client:
+    register-with-eureka: true

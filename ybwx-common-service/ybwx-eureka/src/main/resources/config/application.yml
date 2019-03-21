@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ybwx-eureka-server
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+
+eureka:
+  instance:
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    prefer-ip-address: false
+  server:
+    eviction-interval-timer-in-ms: 15000       # 剔除服务时间
+  client:
+    fetch-registry: true
+    register-with-eureka: true
