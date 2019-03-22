@@ -1,6 +1,6 @@
 package com.ybwx.uaa.config;
 
-import com.ybwx.uaa.service.Oauth2ClientDetailService;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +16,12 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.sql.DataSource;
+
 /**
- * authorization server and resource server  It's order before security configuration
+ * authorization server It's order before security configuration
  */
+@Slf4j
 @Configuration
 @EnableAuthorizationServer
 public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigurerAdapter {
@@ -28,6 +31,9 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
 
     @Autowired
     private RedissonConnectionFactory redissonConnectionFactory;
+
+    @Autowired
+    private DataSource dataSource;
 
     /**
      * token security configuration
@@ -49,10 +55,17 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints){
+        RedisTokenStore redisTokenStore = new RedisTokenStore(redissonConnectionFactory);
+        redisTokenStore.setPrefix("user-auth:");
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(redisTokenStore);
+        defaultTokenServices.setSupportRefreshToken(true);
+//        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
+        defaultTokenServices.setAccessTokenValiditySeconds(3600);
         endpoints
-                .tokenStore(tokenStore())
+                .tokenStore(redisTokenStore)
                 .authenticationManager(authenticationManager)
-                .tokenServices(tokenService());
+                .tokenServices(defaultTokenServices);
     }
 
     /**
@@ -63,23 +76,10 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .withClientDetails(new Oauth2ClientDetailService())
-                .jdbc();
+                .jdbc(dataSource);
+//                .withClientDetails(new Oauth2ClientDetailService())
+//                .jdbc();
     }
 
-    @Bean
-    public TokenStore tokenStore(){
-        return new RedisTokenStore(redissonConnectionFactory);
-    }
-
-    @Bean
-    public AuthorizationServerTokenServices tokenService(){
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setSupportRefreshToken(true);
-        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
-        defaultTokenServices.setAccessTokenValiditySeconds(3600);
-        return defaultTokenServices;
-    }
 
 }
