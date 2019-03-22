@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 21/03/2019 19:06:14
+ Date: 22/03/2019 19:03:16
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,7 @@ CREATE TABLE `demo_stock`  (
 -- ----------------------------
 -- Records of demo_stock
 -- ----------------------------
-INSERT INTO `demo_stock` VALUES (1, 1, 100000, 99850, '2019-03-18 14:08:42', '2019-03-18 14:08:45');
+INSERT INTO `demo_stock` VALUES (1, 1, 100000, 99830, '2019-03-18 14:08:42', '2019-03-18 14:08:45');
 
 -- ----------------------------
 -- Table structure for oauth_access_token
@@ -88,6 +88,13 @@ CREATE TABLE `oauth_client_details`  (
   `autoapprove` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`client_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of oauth_client_details
+-- ----------------------------
+INSERT INTO `oauth_client_details` VALUES ('client_1', NULL, '$2a$10$BYkY74IM8fa0NRmuYr.SBeY4EICrUZv2vsm.v8d8Yg.ju9kuug1xq', 'all', 'password,authorization_code,refresh_token', 'https://www.baidu.com', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `oauth_client_details` VALUES ('client_2', '', '$2a$10$AxYCR3tYKnnE/EqJpEv1nOP4dL.29MDz6fC2.BegGNbq1QORHSCnG', 'all', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `oauth_client_details` VALUES ('client_3', NULL, '$2a$10$cP2d.E0uT.D4Bc1i9r/2AOh.QjXjkysbaTwoF1esW1SbeZbf.IClG', 'all', 'client_credentials', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for oauth_client_token
