@@ -28,7 +28,6 @@ server:
   port: 8090
   servlet:
     context-path: /order
-
 eureka:
   instance:
     lease-expiration-duration-in-seconds: 15  # 服务过期时间

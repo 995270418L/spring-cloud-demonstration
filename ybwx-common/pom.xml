@@ -34,6 +34,8 @@
         <mybatis-springboot.version>2.0.0</mybatis-springboot.version>
         <project.version>1.0-SNAPSHOT</project.version>
         <redission.version>3.10.5</redission.version>
+        <oauth2.version>2.3.5.RELEASE</oauth2.version>
+        <oauth2.autoconfigure.version>2.1.3.RELEASE</oauth2.autoconfigure.version>
     </properties>
 
     <dependencyManagement>
@@ -56,6 +58,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

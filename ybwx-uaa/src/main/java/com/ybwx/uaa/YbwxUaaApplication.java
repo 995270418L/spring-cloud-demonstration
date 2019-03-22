@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class YbwxUaaApplication {
 
     public static void main(String[] args) {
-
         SpringApplication sp = new SpringApplication(YbwxUaaApplication.class);
         Environment environment = sp.run(args).getEnvironment();
         BootstrapLogging.logging(environment);

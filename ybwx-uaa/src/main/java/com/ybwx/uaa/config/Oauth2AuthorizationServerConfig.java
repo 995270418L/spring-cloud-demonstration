@@ -28,12 +28,12 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private RedissonConnectionFactory redissonConnectionFactory;
-
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private DefaultTokenServices defaultTokenServices;
+    @Autowired
+    private RedisTokenStore redisTokenStore;
 
     /**
      * token security configuration
@@ -55,13 +55,6 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints){
-        RedisTokenStore redisTokenStore = new RedisTokenStore(redissonConnectionFactory);
-        redisTokenStore.setPrefix("user-auth:");
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(redisTokenStore);
-        defaultTokenServices.setSupportRefreshToken(true);
-//        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
-        defaultTokenServices.setAccessTokenValiditySeconds(3600);
         endpoints
                 .tokenStore(redisTokenStore)
                 .authenticationManager(authenticationManager)

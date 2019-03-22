@@ -32,6 +32,10 @@ server:
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
 
+logging:
+  level:
+    org.springframework.security: DEBUG
+
 eureka:
   instance:
     lease-expiration-duration-in-seconds: 1  # 服务过期时间

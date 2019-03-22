@@ -22,7 +22,7 @@ import java.util.Date;
 
 @Slf4j
 @RestController
-public class HeraldController {
+public class OrderController {
 
     @Autowired
     private OrderService orderService;
