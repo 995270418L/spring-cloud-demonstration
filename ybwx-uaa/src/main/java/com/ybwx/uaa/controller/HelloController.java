@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequestMapping(value = "/api")
 public class HelloController {
 
-    @RequestMapping(value = "/api")
+    @RequestMapping
     public ResultVO<?> index(){
         log.info("hello index");
         return new ResultVO<>(ResultStatusEnum.OK);
@@ -22,12 +23,6 @@ public class HelloController {
     public ResultVO<?> securityUserInfo(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResultVO<>(authentication);
-    }
-
-    @RequestMapping(value = "/oauth2/me")
-    public ResultVO<?> oauth2UserInfo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResultVO<>(authentication.getPrincipal());
     }
 
 }

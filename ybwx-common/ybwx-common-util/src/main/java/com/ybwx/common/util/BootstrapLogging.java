@@ -21,7 +21,7 @@ public class BootstrapLogging {
             String applicationName = environment.getProperty("spring.application.name");
             String port = environment.getProperty("server.port");
             String activeProfie = environment.getProperty("spring.profiles.active") == null ? "default" : environment.getProperty("spring.profiles.active") ;
-            log.info("\n\n\n\t###########################\n\n\t{} application start\n\n\tURI: http://{}\n\n\tactive profie: {}\n\n\t###########################\n\n\n", applicationName,ip + ":" + port + path, activeProfie);
+            log.info("\n\n\n\t###########################\n\n\t{} application start\n\tURI: http://{}\n\tactive profie: {}\n\n\t###########################\n\n\n", applicationName,ip + ":" + port + path, activeProfie);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

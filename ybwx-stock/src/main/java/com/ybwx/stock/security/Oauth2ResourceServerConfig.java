@@ -16,8 +16,8 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Slf4j
-@Configuration
-@EnableResourceServer   // OAuth2AuthenticationProcessingFilter
+//@Configuration
+//@EnableResourceServer   // OAuth2AuthenticationProcessingFilter
 public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired

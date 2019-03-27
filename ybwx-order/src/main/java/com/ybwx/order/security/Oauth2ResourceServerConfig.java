@@ -48,17 +48,17 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 //        return tokenService;
 //    }
 
-    @Bean
-    @Primary
-    public ResourceServerTokenServices resourceServerTokenServices(){
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        RedisTokenStore redisTokenStore = new RedisTokenStore(redissonConnectionFactory);
-        redisTokenStore.setPrefix("user-auth:");
-        tokenServices.setTokenStore(redisTokenStore);
-        tokenServices.setSupportRefreshToken(true);
-        //        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
-        tokenServices.setAccessTokenValiditySeconds(3600);
-        return tokenServices;
-    }
+//    @Bean
+//    @Primary
+//    public ResourceServerTokenServices resourceServerTokenServices(){
+//        DefaultTokenServices tokenServices = new DefaultTokenServices();
+//        RedisTokenStore redisTokenStore = new RedisTokenStore(redissonConnectionFactory);
+//        redisTokenStore.setPrefix("user-auth:");
+//        tokenServices.setTokenStore(redisTokenStore);
+//        tokenServices.setSupportRefreshToken(true);
+//        //        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
+//        tokenServices.setAccessTokenValiditySeconds(3600);
+//        return tokenServices;
+//    }
 
 }

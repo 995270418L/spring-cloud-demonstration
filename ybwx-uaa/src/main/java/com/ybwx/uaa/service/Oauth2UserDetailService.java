@@ -21,4 +21,5 @@ public class Oauth2UserDetailService implements UserDetailsService {
         roleCollection.add(new SimpleGrantedAuthority("ADMIN"));
         return new User("steve", "$2a$10$bFJB6f.onGpvkhiFaNsvOOELNRZwFdfSURiTWQuaR5znwTrILy8Dy", roleCollection);
     }
+
 }

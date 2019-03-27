@@ -21,19 +21,19 @@ spring:
   profiles:
     active: dev
 
+
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
 
 server:
   port: 8090
-  servlet:
-    context-path: /order
+
 eureka:
   instance:
     lease-expiration-duration-in-seconds: 15  # 服务过期时间
     lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
-    status-page-url-path: ${server.servlet.context-path:/order}/actuator/info
-    health-check-url-path: ${server.servlet.context-path:/order}/actuator/health
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
   client:
@@ -42,3 +42,10 @@ eureka:
 feign:
   okhttp:
     enabled: true
+security:
+  oauth2:
+    client:
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8080/user/me # 自定义的用户信息地址

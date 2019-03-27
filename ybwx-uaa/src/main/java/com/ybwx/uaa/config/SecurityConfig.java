@@ -1,5 +1,6 @@
 package com.ybwx.uaa.config;
 
+import com.ybwx.uaa.exception.CustomAccessDeniedHandler;
 import com.ybwx.uaa.service.Oauth2UserDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
@@ -8,13 +9,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
@@ -30,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private RedissonConnectionFactory redissonConnectionFactory;
 
     @Bean
-    public RedisTokenStore redisTokenStore(){
+    public TokenStore tokenStore(){
         RedisTokenStore redisTokenStore = new RedisTokenStore(redissonConnectionFactory);
         redisTokenStore.setPrefix("user-auth:");
         return redisTokenStore;
@@ -39,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DefaultTokenServices defaultTokenServices(){
         DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(redisTokenStore());
+        tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
         //        defaultTokenServices.setClientDetailsService(new Oauth2ClientDetailService());
         tokenServices.setAccessTokenValiditySeconds(3600);
@@ -50,16 +54,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .requestMatchers()
-                    .antMatchers("/login/**", "/logout/**", "/oauth/**")
-                    .and()
                 .authorizeRequests()
-                    .antMatchers("/login/**", "/logout/**").permitAll()
-                    .antMatchers("/oauth/**").authenticated()
+                    .antMatchers("/oauth/**").permitAll()
+                    .antMatchers(HttpMethod.OPTIONS, "/oauth/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
-                .formLogin().loginProcessingUrl("/login");
+                .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/favicon.ico")
+                .antMatchers("/images/**", "/css/**", "/js/**")
+                .antMatchers("/i18n/**");
     }
 
     @Bean
