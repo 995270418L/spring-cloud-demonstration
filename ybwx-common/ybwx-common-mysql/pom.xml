@@ -27,11 +27,7 @@
             <artifactId>pagehelper</artifactId>
             <version>${mybatis-pagehelper.version}</version>
         </dependency>
-        <dependency>
-            <groupId>velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>${volicy.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

@@ -1,4 +1,4 @@
-package com.ybwx.common.mysql.util;
+package com.ybwx.common.mysql.generator.util;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;

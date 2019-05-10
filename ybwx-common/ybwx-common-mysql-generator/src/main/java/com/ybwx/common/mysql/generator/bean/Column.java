@@ -1,4 +1,4 @@
-package com.ybwx.common.mysql.bean;
+package com.ybwx.common.mysql.generator.bean;
 
 /**
  * @author pst

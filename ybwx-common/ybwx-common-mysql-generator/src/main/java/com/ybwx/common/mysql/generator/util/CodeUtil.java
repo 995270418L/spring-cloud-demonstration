@@ -1,4 +1,4 @@
-package com.ybwx.common.mysql.util;
+package com.ybwx.common.mysql.generator.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

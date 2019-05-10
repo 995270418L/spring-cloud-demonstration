@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: ybwx-config-server
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: E:\conf  # 配置配置文件的扫描路径
+  profiles:
+    active: native
+
+server:
+  port: 8210
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15  # 服务过期时间
+    lease-renewal-interval-in-seconds: 5      # 服务实例刷新时间
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+  server:
+    eviction-interval-timer-in-ms: 15000       # 剔除服务时间
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@peer1:8761/eureka/,http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@peer2:8762/eureka/,http://${spring.security.user.name:ybwx}:${spring.security.user.password:ybwx}@peer3:8763/eureka/
+    fetch-registry: true

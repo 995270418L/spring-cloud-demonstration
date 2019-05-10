@@ -1,8 +1,7 @@
-package com.ybwx.common.mysql.bean;
+package com.ybwx.common.mysql.generator.bean;
 
 import lombok.Data;
 
-import javax.annotation.sql.DataSourceDefinition;
 import java.util.List;
 import java.util.Set;
 

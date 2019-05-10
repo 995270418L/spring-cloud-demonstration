@@ -10,7 +10,7 @@ spring:
     property-naming-strategy: SNAKE_CASE
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://demo.mysql.cn:3306/demo?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://mysql0.res.nuobei.cn:3306/ybwx_admin?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
     hikari:
       connectionTimeout: 30000
       maxLifetime: 1800000
@@ -21,7 +21,7 @@ spring:
     allow-bean-definition-overriding: true
   redis:
     database: 5
-    host: 127.0.0.1
+    host: redis.res.steve.com
     port: 6379
     key-prefix: manager-admin
 
@@ -47,6 +47,3 @@ eureka:
     eviction-interval-timer-in-ms: 15000       # 剔除服务时间
   client:
     register-with-eureka: true
-logging:
-  level:
-    org.springframework.security: DEBUG

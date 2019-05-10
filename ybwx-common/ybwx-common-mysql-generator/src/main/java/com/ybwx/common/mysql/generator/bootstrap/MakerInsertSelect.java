@@ -1,10 +1,10 @@
-package com.ybwx.common.mysql.bootstrap;
+package com.ybwx.common.mysql.generator.bootstrap;
 
-import com.ybwx.common.mysql.bean.Table;
-import com.ybwx.common.mysql.util.CodeUtil;
-import com.ybwx.common.mysql.util.DBUtil;
-import com.ybwx.common.mysql.util.FileUtil;
-import com.ybwx.common.mysql.util.VelocityUtil;
+import com.ybwx.common.mysql.generator.bean.Table;
+import com.ybwx.common.mysql.generator.util.CodeUtil;
+import com.ybwx.common.mysql.generator.util.DBUtil;
+import com.ybwx.common.mysql.generator.util.FileUtil;
+import com.ybwx.common.mysql.generator.util.VelocityUtil;
 
 import java.io.*;
 import java.util.HashMap;

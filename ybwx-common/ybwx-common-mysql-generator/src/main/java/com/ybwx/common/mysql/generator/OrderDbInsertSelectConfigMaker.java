@@ -1,6 +1,6 @@
-package com.ybwx.common.mysql;
+package com.ybwx.common.mysql.generator;
 
-import com.ybwx.common.mysql.bootstrap.MakerInsertSelect;
+import com.ybwx.common.mysql.generator.bootstrap.MakerInsertSelect;
 
 import java.util.ArrayList;
 import java.util.HashMap;

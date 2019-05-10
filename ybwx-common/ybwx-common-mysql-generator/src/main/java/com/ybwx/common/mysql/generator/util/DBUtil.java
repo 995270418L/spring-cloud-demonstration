@@ -1,7 +1,7 @@
-package com.ybwx.common.mysql.util;
+package com.ybwx.common.mysql.generator.util;
 
-import com.ybwx.common.mysql.bean.Column;
-import com.ybwx.common.mysql.bean.Table;
+import com.ybwx.common.mysql.generator.bean.Column;
+import com.ybwx.common.mysql.generator.bean.Table;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
