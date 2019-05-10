@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.List;
@@ -62,6 +63,15 @@ public class JSONUtils {
     }
 
   protected static <T> T readValue(String jsonContent, Class<T> clazz, ObjectMapper objectMapper) {
+    try {
+      return objectMapper.readValue(jsonContent, clazz);
+    } catch (IOException e) {
+      log.error("Fail to convert json[{}] to bean[{}]", jsonContent, clazz, e);
+      throw new IllegalStateException("Fail to parse json str");
+    }
+  }
+
+  protected static <T> T readValue(InputStream jsonContent, Class<T> clazz, ObjectMapper objectMapper) {
     try {
       return objectMapper.readValue(jsonContent, clazz);
     } catch (IOException e) {

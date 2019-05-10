@@ -15,6 +15,7 @@
     <modules>
         <module>ybwx-eureka</module>
         <module>ybwx-zuul</module>
+        <module>ybwx-gateway</module>
     </modules>
 
 

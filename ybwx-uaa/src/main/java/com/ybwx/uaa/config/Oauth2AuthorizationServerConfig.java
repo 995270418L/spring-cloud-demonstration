@@ -1,11 +1,14 @@
 package com.ybwx.uaa.config;
 
+import com.ybwx.uaa.exception.CustomOauth2Exception;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -28,12 +31,15 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private DataSource dataSource;
+
     @Autowired
     private DefaultTokenServices defaultTokenServices;
+
     @Autowired
-    private RedisTokenStore redisTokenStore;
+    private TokenStore tokenStore;
 
     /**
      * token security configuration
@@ -56,9 +62,19 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints){
         endpoints
-                .tokenStore(redisTokenStore)
+                .tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
-                .tokenServices(defaultTokenServices);
+                .tokenServices(defaultTokenServices)
+                .exceptionTranslator(exception -> {
+                    if (exception instanceof OAuth2Exception) {
+                        OAuth2Exception oAuth2Exception = (OAuth2Exception) exception;
+                        return ResponseEntity
+                                .status(oAuth2Exception.getHttpErrorCode())
+                                .body(new CustomOauth2Exception(oAuth2Exception.getMessage()));
+                    } else {
+                        throw exception;
+                    }
+                });
     }
 
     /**
@@ -70,8 +86,6 @@ public class Oauth2AuthorizationServerConfig  extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
                 .jdbc(dataSource);
-//                .withClientDetails(new Oauth2ClientDetailService())
-//                .jdbc();
     }
 
 

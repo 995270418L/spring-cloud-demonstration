@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,10 @@ public class JSONSnakeUtils {
     }
 
   public static <T> T readValue(String jsonContent, Class<T> clazz) {
+    return JSONUtils.readValue(jsonContent, clazz, objectMapper);
+  }
+
+  public static <T> T readValue(InputStream jsonContent, Class<T> clazz) {
     return JSONUtils.readValue(jsonContent, clazz, objectMapper);
   }
 

@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: ybwx-gateway
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true   # 新注册了服务不用重启网关即可访问（schema://gateway-uri/service-id/path）
+      routes:
+        - id: ybwx-order
+          uri: lb://ybwx-order
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+        - id: ybwx-stock
+          uri: lb://ybwx-stock
+          predicates:
+            - Path=/stock/**
+          filters:
+            - StripPrefix=1
+        - id: ybwx-uaa
+          uri: lb://ybwx-uaa
+          predicates:
+            - Path=/uaa/**
+          filters:
+            - StripPrefix=1
+        - id: ybwx-uaa-sso
+          uri: lb://ybwx-uaa-sso
+          predicates:
+            - Path=/uaa/**
+          filters:
+            - StripPrefix=1
+eureka:
+  instance:
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    prefer-ip-address: false
+  server:
+    eviction-interval-timer-in-ms: 15000       # 剔除服务时间
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+
+server:
+  port: 9000

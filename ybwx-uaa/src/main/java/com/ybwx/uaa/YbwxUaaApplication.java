@@ -21,4 +21,5 @@ public class YbwxUaaApplication {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode(s));
     }
+
 }

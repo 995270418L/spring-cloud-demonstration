@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Configuration
-@FeignClient(name = MicroService.YBWX_STOCK, decode404 = true, path = "stock")
+@FeignClient(name = MicroService.YBWX_STOCK, decode404 = true)
 public interface StockService {
 
     @PostMapping(value = "update")

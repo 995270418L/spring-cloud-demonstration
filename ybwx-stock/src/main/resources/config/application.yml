@@ -26,8 +26,6 @@ spring:
 
 server:
   port: 8110
-  servlet:
-    context-path: /stock
 
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
@@ -40,11 +38,21 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 1  # 服务过期时间
     lease-renewal-interval-in-seconds: 1     # 服务实例刷新时间
-    status-page-url-path: ${server.servlet.context-path:/stock}/actuator/info
-    health-check-url-path: ${server.servlet.context-path:/stock}/actuator/health
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
   server:
     eviction-interval-timer-in-ms: 15000       # 剔除服务时间
   client:
     register-with-eureka: true
+
+security:
+  oauth2:
+    client:
+      client-id: client_1
+      client-secret: client_1
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8080/user/me # 自定义的用户信息地址
