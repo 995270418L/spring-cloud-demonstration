@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ybwx-spring-mybatis
+  security:
+    user:
+      name: ybwx
+      password: ybwx
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  profiles:
+    active: dev
+  redis:
+    host: redis.res.steve.com
+    port: 6379
+    database: 10
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+debug: false
